@@ -1,10 +1,10 @@
 package funksjonelleGrensesnittOrd2021;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class UniversityHandbookUtils {
 
@@ -18,7 +18,7 @@ public class UniversityHandbookUtils {
 	 */
 	public static Collection<Course> getCoursesWithPredicate(Collection<Course> courses, Predicate<Course> p) {
 		// TODO
-		return new ArrayList<>();
+		return courses.stream().filter(p).collect(Collectors.toList());
 	}
 
 	/**
@@ -28,8 +28,19 @@ public class UniversityHandbookUtils {
 	 * @return A collection of course without any prerequisites
 	 */
 	public static Collection<Course> getNonPrequisiteCourses(Collection<Course> courses) {
-		// TODO
-		return new ArrayList<>();
+		Predicate<Course> lambdaPred = (c) -> c.getPrerequisites().size() == 0;
+
+		Predicate<Course> internalClass = new Predicate<Course>() {
+                    @Override
+                    public boolean test(Course t) {
+                        return t.getPrerequisites().size() == 0;
+                    }
+			
+		};
+
+		return getCoursesWithPredicate(courses, internalClass);
+
+	
 
 	}
 	
@@ -48,8 +59,16 @@ public class UniversityHandbookUtils {
 	 * @return whether the courses contains an impossible course
 	 */
 	public static boolean containsImpossibleCourse(Collection<Course> courses) {
-		// TODO
+		for (Course c : courses){
+			Collection<Course> prereqs = c.getPrerequisites();
+
+			for (Course pre : prereqs){
+				if (pre.getPrerequisites().contains(c))
+					return true;
+			}
+		}
 		return false;
+
 	}
 	
 	public static void main(String[] args) {

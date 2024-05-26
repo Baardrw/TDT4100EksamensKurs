@@ -3,6 +3,7 @@ package funksjonelleGrensesnittOrd2021;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class UniversityHandbook {
@@ -38,12 +39,56 @@ public class UniversityHandbook {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				String[] details = line.split(",");
+				System.out.println(line);
+				String className = details[0];
+				Double classGrade = Double.parseDouble(details[1]);
+
+				Optional<Course> courseOpt = courses.stream()
+									.filter(c -> c.getCourseName().equals(className))
+										.findAny();
 				
-				// TODO: implement remaining details
-				
+				Course course;
+				if (courseOpt.isPresent()){
+					course = courseOpt.get();
+					course.setAverageGrade(classGrade);
+
+					addPrereq(course, details);
+				} else {
+					course = new Course(className, classGrade);
+					addPrereq(course, details);
+				}
+
+				courses.add(course);
 			}
 		}
 
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(courses);
+		courses.stream().forEach(c -> System.out.println(c));
+
+	}
+
+	private void addPrereq(Course c, String[] file){
+		for (int i = 2; i < file.length; i ++){
+			String className = file[i];
+			Optional<Course> courseOpt = courses.stream()
+									.filter(c1 -> c1.getCourseName().equals(className))
+										.findAny();
+
+			Course course;
+			if (courseOpt.isPresent()){
+				course = courseOpt.get();
+				// TODO set prerequisites
+			} else {
+				course = new Course(className);
+			}
+			c.addPrequisite(course);
+		}
 	}
 
 	/**
@@ -54,8 +99,13 @@ public class UniversityHandbook {
 	 * @return The course with the given name
 	 */
 	public Course getCourse(String courseName) {
-		// TODO
-		return null;
+		for (Course elem : courses) {
+
+			if (elem.getCourseName().equals(courseName))
+				return elem;
+
+		}
+		return new Course("NAN");
 	}
 
 	public List<Course> getCourses(){

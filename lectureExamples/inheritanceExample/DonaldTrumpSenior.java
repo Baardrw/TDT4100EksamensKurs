@@ -2,7 +2,7 @@ package inheritanceExample;
 
 // Donald Trump senior gives all protected attributes to his son through inheritance
 // If Donald Trump senior dies he becomes an abstract class
-public class DonaldTrumpSenior {
+public abstract class DonaldTrumpSenior {
     protected String name = "Donald Trump";
     protected String suffix;
     protected int iq = 65;
@@ -26,6 +26,7 @@ public class DonaldTrumpSenior {
     public static void main(String[] args) {
         DonaldTrumpSenior donald = new DonaldTrumpSenior();
         System.out.println(donald.getName());
+        donald.warCrimes();
     }
 }
 

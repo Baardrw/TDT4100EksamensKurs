@@ -35,8 +35,10 @@ public class example {
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(new File(path)));){
             pw.println("Hei write file 0");
+            
             // Do magic here
             pw.close();
+            pw.
         } catch (Exception e) {
             // Handle the exception
             e.printStackTrace();
@@ -53,7 +55,6 @@ public class example {
                 String line = scanner.nextLine();
                 System.out.println(line); // Do some magic with the line
             }
-            scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +65,6 @@ public class example {
             OutputStream stream = new FileOutputStream(path);
             PrintWriter pw = new PrintWriter(stream);
             pw.println("Hei write file 1");
-            pw.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

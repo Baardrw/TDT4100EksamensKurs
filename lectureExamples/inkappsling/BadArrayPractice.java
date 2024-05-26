@@ -2,6 +2,7 @@ package inkappsling;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class BadArrayPractice {
@@ -19,11 +20,14 @@ public class BadArrayPractice {
         BadArrayPractice example = new BadArrayPractice();
         List<String> wrongAlphabet = example.wrongGetter();
         List<String> correctAlphabet = example.correctGetter();
-        correctAlphabet.add("K"); // Here we change a copy of the list object
+        correctAlphabet.clear(); // Here we change a copy of the list object
         System.out.println("Unchanged alphabet: " + example.correctGetter());
 
-        wrongAlphabet.add("K"); // Here we change the actual list object in the class
+        wrongAlphabet.clear(); // Here we change the actual list object in the class
         System.out.println("Changed alphabet: " + example.correctGetter());
+
+
+        Iterator<String> i = correctAlphabet.iterator();
         
     }
 }
